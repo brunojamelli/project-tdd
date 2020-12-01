@@ -9,7 +9,8 @@ class ProjectRepository {
       const sql = `
       CREATE TABLE IF NOT EXISTS projects (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
-        name TEXT)`
+        name TEXT),
+        status BOOLEAN`
       return this.dao.run(sql)
     }
 

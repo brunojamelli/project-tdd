@@ -37,5 +37,15 @@ describe('Análise dos projetos', () => {
                 .then((data) => expect(data).toBe(720));
     })
 
-   
+    it ('Deve retornar o id da tarefa prioritaria do projeto 3', () =>{
+        const projectId = 3
+        return (project.getPriorityProject(projectRepo,taskRepo,projectId))
+                .then((data) => expect(data).toBe(9));
+    })
+
+    it('Deve retornar 0 em projetos que não tem tarefas prioritária', ()=>{
+        const projectId = 3
+        return (project.getPriorityProject(projectRepo,taskRepo,projectId))
+                .then((data) => expect(data).toBe(0));
+    })
 })
