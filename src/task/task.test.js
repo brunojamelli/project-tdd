@@ -45,4 +45,14 @@ describe('Análise das tarefas', () => {
             .then((data) => expect(data).toBe('Confirmed'));
     })
 
+    it ('Deve impedir de adicionar tarefas a projetos que restem mais que 800 minutos', () =>{
+        const name = "Tarefa Nova"
+        const description = "Tarefa a ser adicionada"
+        const duration = 120
+        const isComplete = 0
+        const projectId = 3
+        return (task.createTask(projectRepo, taskRepo, name, description, duration, isComplete, projectId))
+            .then((data) => expect(data).toBe('Refused'));
+    })
+
 })
