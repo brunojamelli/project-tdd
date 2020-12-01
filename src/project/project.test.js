@@ -11,7 +11,7 @@ let projectRepo
 let taskRepo
 
 describe('Análise dos projetos', () => {
-    
+
     beforeAll(() => {
         return new Promise((resolve, reject) => {
             dao = new AppDAO('../../database.db');
@@ -25,27 +25,27 @@ describe('Análise dos projetos', () => {
         })
     })
 
-    it ('Deve retornar 33,3% como %completude no projeto (id=2) com 3 tarefas, sendo 1 completada', () => {
-        const projectId = 2
-        return (project.completedTasks(projectRepo,taskRepo,projectId))
-                .then((data) => expect(data).toBe(33.3));
+    //novos Testes
+    it('Deve retornar o id da tarefa prioritaria do projeto 3', () => {
+        const projectId = 3;
+        return (project.getPriorityProject(projectRepo, taskRepo, projectId))
+            .then((data) => expect(data).toBe(9));
     })
 
-    it ('Deve retornar 720 no tempo restante do projeto (id=2)', () => {
-        const projectId = 2
-        return (project.remainingTime(projectRepo,taskRepo,projectId))
-                .then((data) => expect(data).toBe(720));
+    it('Deve retornar 0 em projetos que não tem tarefas prioritária', () => {
+        const projectId = 4;
+        return (project.getPriorityProject(projectRepo, taskRepo, projectId))
+            .then((data) => expect(data).toBe(0));
     })
 
-    it ('Deve retornar o id da tarefa prioritaria do projeto 3', () =>{
-        const projectId = 3
-        return (project.getPriorityProject(projectRepo,taskRepo,projectId))
-                .then((data) => expect(data).toBe(9));
+    it('Deve impedir de desativar o projeto 3 que tem tarefas imcompletas', () => {
+        const projectId = 3;
+        return (project.desative(projectRepo, taskRepo, projectId))
+            .then((data) => expect(data).toBe("Not Possible"));
     })
 
-    it('Deve retornar 0 em projetos que não tem tarefas prioritária', ()=>{
-        const projectId = 3
-        return (project.getPriorityProject(projectRepo,taskRepo,projectId))
-                .then((data) => expect(data).toBe(0));
-    })
+    // it('Deve retornar o nivel de prioridade do projeto 4', () => {
+    //     const projectId = 4;
+        
+    // })
 })
