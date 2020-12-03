@@ -1,4 +1,4 @@
-## Project created to using and learning tdd and jest lib and database access
+## Project created to using and learning tdd and jest lib with database access
 
 #### Install the libs
 ```

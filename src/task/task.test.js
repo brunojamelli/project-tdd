@@ -5,12 +5,12 @@ const AppDAO = require('../../src/db/dao')
 const ProjectRepository = require('../../src/project/project_repository')
 const TaskRepository = require('../../src/task/task_repository')
 const { resolve } = require('bluebird')
-
+const project = require('../project/project');
 let dao
 let projectRepo
 let taskRepo
 
-describe('Análise das tarefas', () => {
+describe('Testes de tarefas', () => {
 
     beforeAll(() => {
         return new Promise((resolve, reject) => {
@@ -27,6 +27,16 @@ describe('Análise das tarefas', () => {
 
     //Novos Testes
     it ('Deve impedir de adicionar tarefas a projetos que restem mais que 800 minutos', () =>{
+        const name = "Tarefa Nova"
+        const description = "Tarefa a ser adicionada"
+        const duration = 120
+        const isComplete = 0
+        const projectId = 3
+        return (task.createTask(projectRepo, taskRepo, name, description, duration, isComplete, projectId))
+            .then((data) => expect(data).toBe('Refused'));
+    })
+
+    it ('Deve deixar adicionar tarefas a projetos que restem menos que 800 minutos', () =>{
         const name = "Tarefa Nova"
         const description = "Tarefa a ser adicionada"
         const duration = 120
