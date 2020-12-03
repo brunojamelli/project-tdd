@@ -14,3 +14,8 @@ node main.js
 ```
 npx jext
 ```
+
+#### Running the testes in watch mode
+```
+npx jest --watchAll
+```
