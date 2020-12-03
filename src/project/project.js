@@ -26,13 +26,8 @@ module.exports = {
                 return total
             })
     },
-    /*Novos Métodos */
-    projectPriority: (projectRepo, taskRepo, projectId) => {
-        let proW = completedTasks(projectRepo, taskRepo, projectId) * 2;
-        let remW = remainingTime(projectRepo, taskRepo, projectId) * 4;
-        return (proW + remW) / 6;
-    },
-
+    // Novos Métodos 
+    
     getPriorityProject: (projectRepo, taskRepo, projectId) => {
         let taskDuration = 0;
         let task = {};
@@ -44,8 +39,26 @@ module.exports = {
                        task = row;
                    }
                }); 
-               return task.id;
-            })
-            
+               
+               return taskDuration > 0 ? task.id : 0;
+            }) 
+    },
+
+    desative: (projectRepo, taskRepo, projectId) =>{
+        let total = 0;
+        return projectRepo.getIncompletedTasks(projectId)
+            .then((data)=>{
+               data.forEach(row => {
+                   total += 1;
+               }); 
+               
+               return total > 0 ? "Not Possible" : "disabled";
+            }) 
+    },
+
+    projectPriority: (projectRepo, taskRepo, projectId) => {
+        let proW = completedTasks(projectRepo, taskRepo, projectId) * 2;
+        let remW = remainingTime(projectRepo, taskRepo, projectId) * 4;
+        return (proW + remW) / 6;
     },
 }

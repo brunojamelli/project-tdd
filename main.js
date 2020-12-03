@@ -18,6 +18,7 @@ function main() {
     createProject2(dao)
     createProject3(dao)
     createProject4(dao)
+    createProject5(dao)
     readDB(dao)
   });
 
@@ -281,6 +282,65 @@ function createProject4(dao) {
           isComplete: 1,
           projectId
         }
+      ]
+      return Promise.all(tasks.map((task) => {
+        const { name, description, duration, isComplete, projectId } = task
+        return taskRepo.create(name, description, duration, isComplete, projectId)
+      }))
+    })
+    .then(() => projectRepo.getById(projectId))
+    .then((project) => {
+      console.log(`\nRetreived project from database`)
+      console.log(`project id = ${project.id}`)
+      console.log(`project name = ${project.name}`)
+      return projectRepo.getTasks(project.id)
+    })
+    .then((tasks) => {
+      console.log('\nRetrieved project tasks from database')
+      return new Promise((resolve, reject) => {
+        tasks.forEach((task) => {
+          console.log(`task id = ${task.id}`)
+          console.log(`task name = ${task.name}`)
+          console.log(`task description = ${task.description}`)
+          console.log(`task duration = ${task.duration}`)
+          console.log(`task isComplete = ${task.isComplete}`)
+          console.log(`task projectId = ${task.projectId}`)
+        })
+      })
+      resolve('success')
+    })
+    .catch((err) => {
+      console.log('Error: ')
+      console.log(JSON.stringify(err))
+    })
+}
+
+function createProject5(dao) {
+  const projectRepo = new ProjectRepository(dao)
+  const taskRepo = new TaskRepository(dao)
+  let projectId
+  
+  projectRepo.createTable()
+    .then(() => taskRepo.createTable())
+    .then(() => projectRepo.create("Projeto 5"))
+    .then((data) => {
+      projectId = data.id
+      const tasks = [
+        {
+          name: 'Task 15',
+          description: 'Detalhamento da task 15',
+          duration: 200,
+          isComplete: 1,
+          projectId
+        },
+        {
+          name: 'Task 16',
+          description: 'Detalhamento da task 16',
+          duration: 300,
+          isComplete: 1,
+          projectId
+        },
+        
       ]
       return Promise.all(tasks.map((task) => {
         const { name, description, duration, isComplete, projectId } = task

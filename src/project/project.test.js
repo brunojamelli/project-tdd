@@ -32,22 +32,35 @@ describe('Análise dos projetos', () => {
             .then((data) => expect(data).toBe(5));
     })
 
-    it('Deve retornar 0 em projetos que não tem tarefas prioritária', () => {
+    it('Deve retornar o id da tarefa prioritaria do projeto 4', () => {
         const projectId = 4;
         return (project.getPriorityProject(projectRepo, taskRepo, projectId))
             .then((data) => expect(data).toBe(11));
     })
 
-    it('Deve retornar o id da tarefa prioritaria', () => {
+    it('Deve retornar o id da tarefa prioritaria do projeto 4', () => {
         const projectId = 4;
         return (project.getPriorityProject(projectRepo, taskRepo, projectId))
-            .then((data) => expect(data).toBe(11));
+            .then((data) => expect(data).toBe(9));
     })
+
+    it('Deve retornar 0 no projeto 5', () => {
+        const projectId = 5;
+        return (project.getPriorityProject(projectRepo, taskRepo, projectId))
+            .then((data) => expect(data).toBe(0));
+    })
+
 
     it('Deve impedir de desativar o projeto 3 que tem tarefas imcompletas', () => {
         const projectId = 3;
         return (project.desative(projectRepo, taskRepo, projectId))
             .then((data) => expect(data).toBe("Not Possible"));
+    })
+
+    it('Deve permitir desativar o projeto 5 que não tem tarefas imcompletas', () => {
+        const projectId = 5;
+        return (project.desative(projectRepo, taskRepo, projectId))
+            .then((data) => expect(data).toBe("disabled"));
     })
 
     // it('Deve retornar o nivel de prioridade do projeto 4', () => {

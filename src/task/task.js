@@ -13,10 +13,10 @@ module.exports = {
         //         }
         //     })
         return project.remainingTime(projectRepo, taskRepo, projectId)
-            .then((data) => { 
-                if(data > 800){
+            .then((data) => {
+                if (data > 800) {
                     return "Refused"
-                }else{
+                } else {
                     return "Accepted"
                 }
             })
