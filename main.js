@@ -147,7 +147,7 @@ function createProject2(dao) { //Project with 33,3% completed tasks
         {
           name: 'Task 09',
           description: 'Detalhamento da task 9',
-          duration: 300,
+          duration: 100,
           isComplete: 0,
           projectId
         }

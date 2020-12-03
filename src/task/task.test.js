@@ -41,9 +41,9 @@ describe('Testes de tarefas', () => {
         const description = "Tarefa a ser adicionada"
         const duration = 120
         const isComplete = 0
-        const projectId = 3
+        const projectId = 1
         return (task.createTask(projectRepo, taskRepo, name, description, duration, isComplete, projectId))
-            .then((data) => expect(data).toBe('Refused'));
+            .then((data) => expect(data).toBe('Accepted'));
     })
 
 })
