@@ -27,38 +27,60 @@ module.exports = {
             })
     },
     // Novos Métodos 
-    
+
     getPriorityProject: (projectRepo, taskRepo, projectId) => {
         let taskDuration = 0;
         let task = {};
         return projectRepo.getIncompletedTasks(projectId)
-            .then((data)=>{
-               data.forEach(row => {
-                   if(row.duration > taskDuration ){
-                       taskDuration = row.duration;
-                       task = row;
-                   }
-               }); 
-               
-               return taskDuration > 0 ? task.id : 0;
-            }) 
+            .then((data) => {
+                data.forEach(row => {
+                    if (row.duration > taskDuration) {
+                        taskDuration = row.duration;
+                        task = row;
+                    }
+                });
+
+                return taskDuration > 0 ? task.id : 0;
+            })
     },
 
-    desative: (projectRepo, taskRepo, projectId) =>{
+    desative: (projectRepo, taskRepo, projectId) => {
         let total = 0;
         return projectRepo.getIncompletedTasks(projectId)
-            .then((data)=>{
-               data.forEach(row => {
-                   total += 1;
-               }); 
-               
-               return total > 0 ? "Not Possible" : "disabled";
-            }) 
+            .then((data) => {
+                data.forEach(row => {
+                    total += 1;
+                });
+
+                return total > 0 ? "Not Possible" : "disabled";
+            })
     },
 
-    projectPriority: (projectRepo, taskRepo, projectId) => {
-        let proW = completedTasks(projectRepo, taskRepo, projectId) * 2;
-        let remW = remainingTime(projectRepo, taskRepo, projectId) * 4;
-        return (proW + remW) / 6;
-    },
+    // getPriority: async (projectRepo, taskRepo, projectId) => {
+    //     let compW = await self.completedTasks(projectRepo, taskRepo, projectId);
+    //     let remW = self.remainingTime(projectRepo, taskRepo, projectId) * 4;
+    //     return compW;
+    // },
+
+    getPriority: (projectRepo, projectId) => {
+        let remaningTime = 0
+        let perInc = 0
+        let totalCompleted = 0
+        let totalIncompleted = 0
+        return projectRepo.getCompletedTasks(projectId)
+            .then((data) => {
+                totalCompleted = data.length
+            })
+            .then(() => {
+                return projectRepo.getIncompletedTasks(projectId)
+            })
+            .then((data) => {
+                totalIncompleted = data.length
+                perInc = parseFloat((totalCompleted * 100 / (totalCompleted + totalIncompleted)).toFixed(2))
+                data.forEach(row => {
+                    remaningTime += row.duration > 240 ? row.duration * 2 : row.duration
+                });
+                return parseFloat((((perInc * 2) + (remaningTime * 4)) / 6).toFixed(2));
+            })
+    }
 }
