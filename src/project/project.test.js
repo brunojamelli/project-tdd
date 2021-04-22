@@ -63,13 +63,13 @@ describe('Análise dos projetos', () => {
             .then((data) => expect(data).toBe("disabled"));
     })
 
-    it('Deve retornar 491.1 para a prioridade do projeto 3', () => {
+    it('Deve retornar 491.1 para a prioridade do projeto 2', () => {
         const projectId = 2;
         return (project.getPriority(projectRepo, projectId))
             .then((data) => expect(data).toBe(157.78));
     })
 
-    it('Deve retornar 491.1 para a prioridade do projeto 3', () => {
+    it('Deve retornar 491.1 para a prioridade do projeto 2', () => {
         const projectId = 2;
         return (project.getPriority(projectRepo, projectId))
             .then((data) => expect(data).toBe(600.22));

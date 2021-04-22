@@ -56,12 +56,6 @@ module.exports = {
             })
     },
 
-    // getPriority: async (projectRepo, taskRepo, projectId) => {
-    //     let compW = await self.completedTasks(projectRepo, taskRepo, projectId);
-    //     let remW = self.remainingTime(projectRepo, taskRepo, projectId) * 4;
-    //     return compW;
-    // },
-
     getPriority: (projectRepo, projectId) => {
         let remaningTime = 0
         let perInc = 0
